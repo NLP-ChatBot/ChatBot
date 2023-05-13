@@ -1,3 +1,6 @@
+# chatbot requirements
+pymongo==4.3.3
+
 # development
 matplotlib==3.7.1
 pandas==2.0.1
