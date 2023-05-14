@@ -22,7 +22,7 @@
         <li><a href="https://www.kaggle.com/datasets/trinadhsingaladevi/chatbot-conversations-about-computer">Chatbot conversations about computer</a></li>
         <li><a href="https://www.kaggle.com/datasets/therealsampat/intents-for-first-aid-recommendations">First Aid Recommendations Intents</a></li>
     </ul>
-    <p>Caso o dataset localizado em 'data/raw/chatbot_dataset.csv' seja excluído ou modificado é possível restaurar ele usando o script 'make_dataset.py' em 'data/raw'. Para isso, é necessario um nome de usuário e senha para solicitar a base. O usuário e senha de acesso livre é 'user' para ambos os campos:</p>
+    <p>Caso o dataset localizado em 'data/raw/chatbot_dataset.csv' seja excluído ou modificado é possível restaurar ele usando o script 'make_dataset.py' em 'data'. Para isso, é necessario um nome de usuário e senha para solicitar a base. O usuário e senha de acesso livre é 'user' para ambos os campos:</p>
 
 ```
 $python data/make_dataset.py -u user -p user
