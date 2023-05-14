@@ -1,17 +1,22 @@
 # imports
-import ipykernel
 import matplotlib
 import nltk
 import pandas
 import PySide6
+import sklearn
+import wordcloud
 
 
 def test_package_version() -> None:
     
     # looping through each
     # package
-    for pack, version in zip(
-        (ipykernel, matplotlib, nltk, pandas, PySide6),
-        ('6.23.0', '3.7.1', '3.8.1', '2.0.1', '6.5.0')
+    for pack, version in (
+            (matplotlib, '3.7.1'),
+            (nltk, '3.8.1'),
+            (pandas, '2.0.1'),
+            (PySide6, '6.5.0'),
+            (sklearn, '1.2.2'),
+            (wordcloud, '1.9.1.1')
         ):
         assert pack.__version__ == version
