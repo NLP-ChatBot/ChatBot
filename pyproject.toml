@@ -9,7 +9,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 pymongo = "4.3.3"
-autocorrect = "^2.6.1"
+autocorrect = "2.6.1"
 
 
 [tool.poetry.group.dev.dependencies]
