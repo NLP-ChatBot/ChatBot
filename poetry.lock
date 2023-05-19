@@ -31,6 +31,17 @@ six = "*"
 test = ["astroid", "pytest"]
 
 [[package]]
+name = "autocorrect"
+version = "2.6.1"
+description = "Spelling Corrector"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "autocorrect-2.6.1.tar.gz", hash = "sha256:2bc68192dc645b44bece2613caac338e93548c3dac9c563095b27224c7fd4391"},
+]
+
+[[package]]
 name = "backcall"
 version = "0.2.0"
 description = "Specifications for callback functions passed in to an API"
@@ -1826,4 +1837,4 @@ pillow = "*"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "8c24665fa2d66ca9a6ffc6c384a136b2dfdb53167a933920b488ce04af8f6f3c"
+content-hash = "6dc4a3e20cdd20fc96baaf45e21709646f841a6cc153ff6f08e32ca88151cc12"
