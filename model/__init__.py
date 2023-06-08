@@ -14,12 +14,12 @@ class ChatBot(nn.Module):
         self.wd = word_dict
         self.dv = device
         
-        self.l_h = nn.Linear(in_features=in_f, out_features=1024)
-        self.l_c = nn.Linear(in_features=in_f, out_features=1024)
+        self.l_h = nn.Linear(in_features=in_f, out_features=512)
+        self.l_c = nn.Linear(in_features=in_f, out_features=512)
         
         self.emb = nn.Embedding(num_embeddings=self.w, embedding_dim=self.len)
-        self.lstm = nn.LSTM(input_size=in_f + self.len, hidden_size=1024, bias=True, batch_first=True)
-        self.lin = nn.Linear(in_features=1024, out_features=self.w)
+        self.lstm = nn.LSTM(input_size=in_f + self.len, hidden_size=512, bias=True, batch_first=True)
+        self.lin = nn.Linear(in_features=512, out_features=self.w)
         self.drop = nn.Dropout(p=0.3)
         
         self.to(device=device)
@@ -29,13 +29,12 @@ class ChatBot(nn.Module):
         pred = torch.zeros(size=[question.size(0), self.w, self.len]).to(device=self.dv)
 
         h, c = self.init_memory(x=question.float())
-        
         answer = self.emb(answer.long())
 
         for idx in range(self.len):
             
-            out, (h, c) = self.lstm(torch.cat(tensors=(question, answer[:,0]), dim=1), (h, c))
-            out_lin = self.lin(self.drop(out))
+            out, (h, c) = self.lstm(torch.cat(tensors=(question.unsqueeze(1), answer[:,idx].unsqueeze(1)), dim=2), (h, c))
+            out_lin = self.lin(self.drop(out.squeeze(1)))
             
             pred[:,:,idx] = out_lin
         
@@ -51,8 +50,8 @@ class ChatBot(nn.Module):
         
         for word_idx in range(self.len):
             
-            out, (h,c) = self.lstm(torch.cat(tensors=(question, words[:,0]), dim=1), (h,c))
-            out_lin = self.lin(self.drop(out))
+            out, (h,c) = self.lstm(torch.cat(tensors=(question.unsqueeze(1), words[:,0].unsqueeze(1)), dim=2), (h,c))
+            out_lin = self.lin(self.drop(out.squeeze(1)))
             
             pred[:,:,word_idx] = out_lin
             
@@ -65,7 +64,7 @@ class ChatBot(nn.Module):
     
     def init_memory(self, x) -> torch.Tensor:
 
-        h = self.l_h(x)
-        c = self.l_c(x)
+        h = self.l_h(x).unsqueeze(0)
+        c = self.l_c(x).unsqueeze(0)
 
         return h, c
