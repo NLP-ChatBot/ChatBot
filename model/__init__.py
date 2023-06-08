@@ -28,7 +28,7 @@ class ChatBot(nn.Module):
         
         pred = torch.zeros(size=[question.size(0), self.w, self.len]).to(device=self.dv)
 
-        h, c = self.init_memory(x=question)
+        h, c = self.init_memory(x=question.float())
         
         answer = self.emb(answer.long())
 
@@ -46,7 +46,7 @@ class ChatBot(nn.Module):
         pred = torch.zeros(size=(question.size(0), self.w, self.len)).to(device=self.dv)
         init_word = torch.tensor(data=[self.wd['<start>']]).to(device=self.dv)
         
-        h, c = self.init_memory(x=question)
+        h, c = self.init_memory(x=question.float())
         words = self.emb(init_word.long())
         
         for word_idx in range(self.len):
