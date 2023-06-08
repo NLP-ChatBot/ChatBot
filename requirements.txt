@@ -1,14 +1,10 @@
-# chatbot requirements
+dnspython==2.3.0
+nvidia-cublas-cu11==11.10.3.66
+nvidia-cuda-nvrtc-cu11==11.7.99
+nvidia-cuda-runtime-cu11==11.7.99
+nvidia-cudnn-cu11==8.5.0.96
 pymongo==4.3.3
-
-# development
-matplotlib==3.7.1
-pandas==2.0.1
-ipykernel==6.23.0
-nltk==3.8.1
-pytest==7.3.1
-scikit-learn==1.2.2
-wordcloud==1.9.1.1
-
-# GUI
-PySide6==6.5.0
+setuptools==67.8.0
+torch==1.13.1
+typing-extensions==4.6.3
+wheel==0.40.0
