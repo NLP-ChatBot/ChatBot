@@ -19,7 +19,7 @@ class ChatBot(nn.Module):
         self.q_lin = nn.Linear(in_features=512, out_features=256)
         
         self.a_emb = nn.Embedding(num_embeddings=self.w, embedding_dim=self.len)
-        self.a_lstm = nn.LSTM(input_size=self.len + 256, hidden_size=512, bias=True, batch_first=True)
+        self.a_lstm = nn.LSTM(input_size=self.len + 256, hidden_size=512, bias=True, batch_first=False)
         
         self.lin = nn.Linear(in_features=512, out_features=self.w)
         self.drop = nn.Dropout(p=0.3)
@@ -38,7 +38,7 @@ class ChatBot(nn.Module):
         
         for idx in range(self.len):
 
-            input_lstm = torch.cat(tensors=[answer[:,idx].unsqueeze(1), q_out], dim=0)
+            input_lstm = torch.cat(tensors=[answer[:,idx].unsqueeze(0), q_out], dim=2)
             out, (h, c) = self.a_lstm(input_lstm, (h, c))
             out_lin = self.lin(self.drop(out.squeeze(1)))
             
@@ -59,7 +59,7 @@ class ChatBot(nn.Module):
         
         for word_idx in range(self.len):
 
-            input_lstm = torch.cat(tensors=[words[:,0].unsqueeze(1), q_out], dim=0)
+            input_lstm = torch.cat(tensors=[words[:,0].unsqueeze(0), q_out], dim=2)
             out, (h,c) = self.a_lstm(input_lstm, (h,c))
             out_lin = self.lin(self.drop(out.squeeze(1)))
             
