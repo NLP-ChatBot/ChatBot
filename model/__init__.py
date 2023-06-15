@@ -26,7 +26,7 @@ class ChatBot(nn.Module):
         
         self.to(device=device)
     
-    def forward(self, question, answer) -> torch.Tensor:
+    def forward(self, question: torch.Tensor, answer: torch.Tensor) -> torch.Tensor:
         
         pred = torch.zeros(size=[question.size(0), self.w, self.len]).to(device=self.dv)
         
@@ -46,7 +46,7 @@ class ChatBot(nn.Module):
         
         return pred
     
-    def gen_text(self, question) -> torch.Tensor:
+    def gen_text(self, question: torch.Tensor) -> torch.Tensor:
         
         pred = torch.zeros(size=(question.size(0), self.w, self.len)).to(device=self.dv)
         init_word = torch.tensor(data=[self.wd['<start>']]).to(device=self.dv)
