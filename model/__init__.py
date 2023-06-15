@@ -16,6 +16,7 @@ class ChatBot(nn.Module):
         
         self.q_emb = nn.Embedding(num_embeddings=self.w, embedding_dim=self.len)
         self.q_lstm = nn.LSTM(input_size=self.len, hidden_size=512, bias=True, batch_first=True)
+        self.q_lin = nn.Linear(in_features=512, out_features=256)
         
         self.a_emb = nn.Embedding(num_embeddings=self.w, embedding_dim=self.len)
         self.a_lstm = nn.LSTM(input_size=self.len, hidden_size=512, bias=True, batch_first=True)
@@ -31,12 +32,14 @@ class ChatBot(nn.Module):
         
         question = self.q_emb(question.long())
         q_out, (h, c) = self.q_lstm(question)
+        q_out = self.q_lin(h)
         
         answer = self.a_emb(answer.long())
         
         for idx in range(self.len):
-            
-            out, (h, c) = self.a_lstm(answer[:,idx].unsqueeze(1), (h, c))
+
+            input_lstm = torch.cat(tensors=[answer[:,idx].unsqueeze(1), q_out], dim=0)
+            out, (h, c) = self.a_lstm(input_lstm, (h, c))
             out_lin = self.lin(self.drop(out.squeeze(1)))
             
             pred[:,:,idx] = out_lin
@@ -50,12 +53,14 @@ class ChatBot(nn.Module):
         
         question = self.q_emb(question.long())
         q_out, (h, c) = self.q_lstm(question)
+        q_out = self.q_lin(h)
         
         words = self.a_emb(init_word.long())
         
         for word_idx in range(self.len):
-            
-            out, (h,c) = self.lstm(words[:,0].unsqueeze(1), (h,c))
+
+            input_lstm = torch.cat(tensors=[words[:,0].unsqueeze(1), q_out], dim=0)
+            out, (h,c) = self.lstm(input_lstm, (h,c))
             out_lin = self.lin(self.drop(out.squeeze(1)))
             
             pred[:,:,word_idx] = out_lin
