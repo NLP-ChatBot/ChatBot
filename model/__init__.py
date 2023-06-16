@@ -22,7 +22,7 @@ class ChatBot(nn.Module):
         self.a_lstm = nn.LSTM(input_size=self.len + 256, hidden_size=512, bias=True, batch_first=False)
         
         self.lin = nn.Linear(in_features=512, out_features=self.w)
-        self.drop = nn.Dropout(p=0.3)
+        self.drop = nn.Dropout(p=0.4)
         
         self.to(device=device)
     
