@@ -3,3 +3,7 @@ setuptools==67.8.0
 torch==1.13.1
 typing-extensions==4.6.3
 wheel==0.40.0
+matplotlib==3.7.1
+pandas==2.0.1
+ipykernel==6.23.0
+nltk==3.8.1
